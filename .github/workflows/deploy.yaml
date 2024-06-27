@@ -12,17 +12,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: ls
-        run: |
-          ls
-        working-directory: ${{ github.workspace }}
-      
-      - name: Copy all files to docs except .github
-        run: |
-          mkdir docs
-          cp -r * docs
-          rm -rf docs/.github
       
       - name: Archive production build
         uses: actions/upload-artifact@v2
