@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Archive production build
         uses: actions/upload-artifact@v2
         with:
@@ -20,15 +20,16 @@ jobs:
           path: ${{ github.workspace}}/docs
 
   clone_repo:
+    needs: create_artifact
     runs-on: ubuntu-latest
     name: Clone Repo
     steps:
       - name: clone_quartz
         uses: GuillaumeFalourd/clone-github-repo-action@v2.3
         with:
-          repository: 'quartz'
-          branch: 'v4'
-          owner: 'jackyzha0'
+          repository: "quartz"
+          branch: "v4"
+          owner: "jackyzha0"
 
       - name: remove docs folder
         run: |
@@ -39,4 +40,3 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: docs
-        
