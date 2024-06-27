@@ -27,7 +27,7 @@ jobs:
         uses: GuillaumeFalourd/clone-github-repo-action@v2.3
         with:
           repository: 'quartz'
-          branch: 'main'
+          branch: 'v4'
           owner: 'jackyzha0'
 
       - name: remove docs folder
