@@ -55,7 +55,7 @@ jobs:
     name: Test
     strategy: 
       matrix:
-        node-version: [14, 16, 18]
+        node-version: [18.14, 18.16, 18.18]
     steps:
       - name: download artifact
         uses: actions/download-artifact@v2
