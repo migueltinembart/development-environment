@@ -132,7 +132,6 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ secrets.CF_PAGES_PROJECT_NAME }}
-          directory: ${{ github.workspace }}/quartz/public
-          workingDirectory: ${{ github.workspace }}/quartz
+          directory: ${{ github.workspace }}/quartz
       
       
