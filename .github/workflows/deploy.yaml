@@ -30,6 +30,7 @@ jobs:
           repository: "quartz"
           branch: "v4"
           owner: "jackyzha0"
+          depth: 1
 
       - name: remove docs folder
         run: |
