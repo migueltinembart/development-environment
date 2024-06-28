@@ -109,21 +109,6 @@ jobs:
           npm install
         working-directory: ${{ github.workspace }}/quartz
 
-      - name: list directory
-        run: |
-          ls -la
-        working-directory: ${{ github.workspace }}/quartz
-
-      - name: Build
-        run: |
-          npm run quartz build
-        working-directory: ${{ github.workspace }}/quartz
-
-      - name: Archive production build
-        uses: actions/upload-artifact@v2
-        with:
-          name: public
-          path: ${{ github.workspace }}/quartz/public
 
   deploy:
     needs: build
@@ -133,14 +118,13 @@ jobs:
       - name: download artifact
         uses: actions/download-artifact@v2
         with:
-          name: public
+          name: app
           path: ${{ github.workspace }}
 
-      - name: ls
+      - name: Unpack artifact
         run: |
-          ls -la
+          tar -xvf quartz.tar
         working-directory: ${{ github.workspace }}
-
 
       - name: Deploy to cloudflare pages
         uses: cloudflare/pages-action@v1
@@ -148,6 +132,6 @@ jobs:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ secrets.CF_PAGES_PROJECT_NAME }}
-          directory: ${{ github.workspace }}/quartz/public
+          directory: ${{ github.workspace }}/quartz
       
       
