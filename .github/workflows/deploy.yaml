@@ -126,6 +126,11 @@ jobs:
           tar -xvf quartz.tar
         working-directory: ${{ github.workspace }}
 
+      - name: npm install
+        run: |
+          npm install
+        working-directory: ${{ github.workspace }}/quartz
+
       - name: build
         run: |
           npx quartz build
