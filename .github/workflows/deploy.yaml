@@ -62,13 +62,75 @@ jobs:
         with:
           name: app
           path: ${{ github.workspace }}
-          
+
       - name: Use NodeJs ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
       
-      - name: see contents
+      - name: Install dependencies
+        run: |
+          npm install
+        working-directory: ${{ github.workspace }}/quartz
+      
+      - name: Run tests
+        run: |
+          npm run check
+        working-directory: ${{ github.workspace }}/quartz
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: app
+
+      - name: Use NodeJs
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install
+        working-directory: ${{ github.workspace }}/quartz
+
+      - name: Build
+        run: |
+          npm run quartz build
+        working-directory: ${{ github.workspace }}/quartz
+
+      - name: Archive production build
+        uses: actions/upload-artifact@v2
+        with:
+          name: public
+          path: ${{ github.workspace }}/quartz/public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: public
+          path: ${{ github.workspace }}
+
+      - name: list directory
         run: |
           ls -la
-        working-directory: ${{ github.workspace }}
+        working-directory: ${{ github.workspace }}/quartz/public
+
+      - name: Deploy to cloudflare pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_PAGES_SITE }}
+          projectName: ${{ secrets.CF_PAGES_PROJECT_NAME }}
+          directory: ${{ github.workspace }}/quartz/public
+      
+      
