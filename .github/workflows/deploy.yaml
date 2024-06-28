@@ -42,7 +42,33 @@ jobs:
         with:
           name: docs
           path: ${{ github.workspace }}/quartz
+      
+      - name: upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: ${{ github.workspace }}/quartz
 
-      - name: list docs
+  test:
+    needs: clone_repo
+    runs-on: ubuntu-latest
+    name: Test
+    strategy: 
+      matrix:
+        node-version: [14, 16, 18]
+    steps:
+      - name: download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: app
+          path: ${{ github.workspace }}
+          
+      - name: Use NodeJs ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: see contents
         run: |
-          ls -l quartz/docs
+          ls -la
+        working-directory: ${{ github.workspace }}
