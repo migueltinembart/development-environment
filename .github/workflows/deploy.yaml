@@ -136,6 +136,11 @@ jobs:
           name: public
           path: ${{ github.workspace }}
 
+      - name: ls
+        run: |
+          ls -la
+        working-directory: ${{ github.workspace }}
+
 
       - name: Deploy to cloudflare pages
         uses: cloudflare/pages-action@v1
