@@ -126,12 +126,17 @@ jobs:
           tar -xvf quartz.tar
         working-directory: ${{ github.workspace }}
 
+      - name: build
+        run: |
+          npx quartz build
+        working-directory: ${{ github.workspace }}/quartz
+
       - name: Deploy to cloudflare pages
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ secrets.CF_PAGES_PROJECT_NAME }}
-          directory: ${{ github.workspace }}/quartz
+          directory: ${{ github.workspace }}/quartz/public
       
       
