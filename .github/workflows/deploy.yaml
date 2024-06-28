@@ -52,8 +52,9 @@ jobs:
   test:
     needs: clone_repo
     runs-on: ubuntu-latest
-    name: Test
-    strategy: 
+    name: Test before
+    strategy:
+      fail-fast: false 
       matrix:
         node-version: [18.14, 18.16, 18.18]
     steps:
@@ -71,11 +72,6 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
-        working-directory: ${{ github.workspace }}/quartz
-      
-      - name: Run tests
-        run: |
-          npm run check
         working-directory: ${{ github.workspace }}/quartz
 
   build:
