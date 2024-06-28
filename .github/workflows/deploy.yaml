@@ -42,3 +42,7 @@ jobs:
         with:
           name: docs
           path: ${{ github.workspace }}/quartz
+
+      - name: list docs
+        run: |
+          ls -l quartz/docs
