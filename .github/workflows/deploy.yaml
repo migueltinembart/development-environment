@@ -43,11 +43,16 @@ jobs:
           name: docs
           path: ${{ github.workspace }}/quartz
       
+      - name: tar package
+        run: |
+          tar -cvf quartz.tar quartz
+        working-directory: ${{ github.workspace }}
+      
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: ${{ github.workspace }}/quartz
+          path: ${{ github.workspace }}/quartz.tar
 
   test:
     needs: clone_repo
@@ -63,6 +68,11 @@ jobs:
         with:
           name: app
           path: ${{ github.workspace }}
+
+      - name: Unpack artifact
+        run: |
+          tar -xvf quartz.tar
+        working-directory: ${{ github.workspace }}
 
       - name: Use NodeJs ${{ matrix.node-version }}
         uses: actions/setup-node@v2
@@ -83,6 +93,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: app
+
+      - name: Unpack artifact
+        run: |
+          tar -xvf quartz.tar
+        working-directory: ${{ github.workspace }}
 
       - name: Use NodeJs
         uses: actions/setup-node@v2
