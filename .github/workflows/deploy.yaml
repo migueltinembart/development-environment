@@ -34,14 +34,17 @@ jobs:
 
       - name: remove docs folder
         run: |
-          rm -rf docs
+          rm -rf quartz/docs
         working-directory: ${{ github.workspace }}
 
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
           name: docs
+          path: quartz/docs
+
 
       - name: ls
         run: |
-          ls
+          ls quartz/
+ 
