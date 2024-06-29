@@ -13,11 +13,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: archive and include dotfile
+        run: |
+          tar -czvf content.tar.gz ./.
+        working-directory: ${{ github.workspace }}
+
       - name: Archive production build
         uses: actions/upload-artifact@v2
         with:
-          name: docs
-          path: ${{ github.workspace}}
+          name: content
+          path: ${{ github.workspace}}/content.tar.gz
 
   clone_repo:
     needs: create_artifact
@@ -40,52 +45,36 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: docs
-          path: ${{ github.workspace }}/quartz
+          name: content
+          path: ${{ github.workspace }}
       
-      - name: tar package
+      - name: untar content.tar.gz
         run: |
-          tar -cvf quartz.tar quartz
+          tar -xzvf content.tar.gz -C quartz/content
+        working-directory: ${{ github.workspace }}
+
+      - name: remove content.tar.gz
+        run: |
+          rm -rf content.tar.gz
+        working-directory: ${{ github.workspace }}
+
+      - name: move quartz.config.ts
+        run: |
+          mv quartz.config.ts ../..
+        working-directory: ${{ github.workspace }}/quartz/content/.config
+
+      - name: tar quartz
+        run: |
+          tar -czvf quartz.tar.gz quartz
         working-directory: ${{ github.workspace }}
       
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: ${{ github.workspace }}/quartz.tar
-
-  test:
-    needs: clone_repo
-    runs-on: ubuntu-latest
-    name: Test with NodeJs ${{ matrix.node-version }}
-    strategy:
-      fail-fast: false 
-      matrix:
-        node-version: [18.14, 18.16, 18.18]
-    steps:
-      - name: download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: app
-          path: ${{ github.workspace }}
-
-      - name: Unpack artifact
-        run: |
-          tar -xvf quartz.tar
-        working-directory: ${{ github.workspace }}
-
-      - name: Use NodeJs ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      
-      - name: Install dependencies
-        run: |
-          npm install
-        working-directory: ${{ github.workspace }}/quartz
+          path: ${{ github.workspace }}/quartz.tar.gz
 
   build:
-    needs: test
     runs-on: ubuntu-latest
     name: Build
     steps:
@@ -96,7 +85,7 @@ jobs:
 
       - name: Unpack artifact
         run: |
-          tar -xvf quartz.tar
+          tar -xzvf quartz.tar.gz
         working-directory: ${{ github.workspace }}
 
       - name: Use NodeJs
@@ -113,7 +102,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    name: Deploy
+    name: Deploy to Cloudflare Pages
     steps:
       - name: download artifact
         uses: actions/download-artifact@v2
@@ -123,7 +112,7 @@ jobs:
 
       - name: Unpack artifact
         run: |
-          tar -xvf quartz.tar
+          tar -xzvf quartz.tar.gz
         working-directory: ${{ github.workspace }}
 
       - name: npm install
