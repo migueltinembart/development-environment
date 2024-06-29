@@ -15,7 +15,7 @@ jobs:
 
       - name: archive and include dotfile
         run: |
-          tar -czvf content.tar.gz ./.
+          tar -czvf content.tar.gz .
         working-directory: ${{ github.workspace }}
 
       - name: Archive production build
