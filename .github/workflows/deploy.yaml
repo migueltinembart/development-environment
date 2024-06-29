@@ -47,7 +47,7 @@ jobs:
         with:
           name: content
           path: ${{ github.workspace }}
-      
+
       - name: untar content.tar.gz
         run: |
           tar -xzvf content.tar.gz -C quartz/content
@@ -67,7 +67,7 @@ jobs:
         run: |
           tar -czvf quartz.tar.gz quartz
         working-directory: ${{ github.workspace }}
-      
+
       - name: upload artifact
         uses: actions/upload-artifact@v2
         with:
@@ -77,6 +77,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build
+    needs: clone_repo
     steps:
       - name: download artifact
         uses: actions/download-artifact@v2
@@ -97,7 +98,6 @@ jobs:
         run: |
           npm install
         working-directory: ${{ github.workspace }}/quartz
-
 
   deploy:
     needs: build
@@ -132,5 +132,3 @@ jobs:
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
           projectName: ${{ secrets.CF_PAGES_PROJECT_NAME }}
           directory: ${{ github.workspace }}/quartz/public
-      
-      
