@@ -12,10 +12,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          path: content
 
       - name: archive and include dotfile
         run: |
-          tar -czvf content.tar.gz .
+          tar -czvf content.tar.gz content
         working-directory: ${{ github.workspace }}
 
       - name: Archive production build
@@ -61,7 +63,7 @@ jobs:
       - name: move quartz.config.ts
         run: |
           mv quartz.config.ts ../..
-        working-directory: ${{ github.workspace }}/quartz/content/.config
+        working-directory: ${{ github.workspace }}/quartz/content/deps
 
       - name: tar quartz
         run: |
