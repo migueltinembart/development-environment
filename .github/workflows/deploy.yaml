@@ -52,13 +52,9 @@ jobs:
 
       - name: untar content.tar.gz
         run: |
-          tar -xzvf content.tar.gz -C quartz/content
+          tar -xzvf content.tar.gz -C quartz
         working-directory: ${{ github.workspace }}
 
-      - name: remove content.tar.gz
-        run: |
-          rm -rf content.tar.gz
-        working-directory: ${{ github.workspace }}
 
       - name: move quartz.config.ts
         run: |
