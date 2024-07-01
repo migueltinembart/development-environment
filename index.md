@@ -35,7 +35,6 @@ Folgende Repositories sind Bestandteil des Projekts:
 
 Jedes Repository bietet für die spezifische Anwendung ihre eigene Dokumentations- und Anleitungsstruktur und stehen allen zur Verfügung. Einzelne Repositories vereinfachen die Komposition und ermöglichen eine modulare Arbeitsweise.
 
-
 ## Einleitung
 
 Eine Development Environment dient zur Vereinfachung von Entwicklungsprozessen in einer Organisation, für persönliche Projekte und kleinere Teams. Zu einer Development Environment gehören die Infrastruktur, Tools und Programme welche es sich zum Ziel machen, dem Entwickler oder dem Entwicklerteam eine Standardpalette an Vorgängen anzubieten um Applikationen zu deployen und die nötigen Resourcen zur Verfügung zu stellen um die Deployments zu vereinfachen. Da ich von einem cloud-nativen Ansatz in jeder Hinsicht ab Infrastruktur bis hin zur Applikation profitieren möchte, habe ich es mir zur Aufgabe gemacht die Planung, Umsetzung und die Dokumentation zu diesem Projekt für meine privaten Zwecke, aber auch für zukünftige Semesterarbeiten in die eigene Hand zu nehmen.
@@ -66,21 +65,4 @@ Folgende Ziele sind für dieses Projekt zu erreichen:
 - Dokumentation des Projekts als Static Webpage übergeben
 
 Die entsprechenden Ziele werden, während der Dokumentation explizit erwähnt
-
-### Risiken
-
-Es besteht das Risiko dass während oder nach der Inbetriebnahme Komponenten wie Rechner, Netzwerkgeräte oder ähnliches ausfallen können. Da dies auf meiner privaten Umgebung geschieht und aus geschäftlicher Sicht keine Dringlichkeit. Kritischere Kompenten des Projekts wie diese Dokumentation, werden auf Cloudflare Pages hochgeladen um die Ausfallsicherheit zu garantieren.
-
-## Architektur
-
-Die verwendeten Systeme werden in vier Ebenen kategorisiert:
-
-- Data Plane
-- Control Plane
-- Application Plane
-- Compute Plane
-
-Mit dieser Aufteilung wird sichergestellt
-
-![Bild](./assets/Development-Environment-Planes.png)
 
