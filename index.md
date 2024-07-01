@@ -73,7 +73,14 @@ Es besteht das Risiko dass während oder nach der Inbetriebnahme Komponenten wie
 
 ## Architektur
 
-Die verwendeten Systeme werden kategorisiert  
+Die verwendeten Systeme werden in vier Ebenen kategorisiert:
+
+- Data Plane
+- Control Plane
+- Application Plane
+- Compute Plane
+
+Mit dieser Aufteilung wird sichergestellt
 
 ![Bild](./assets/Development-Environment-Planes.png)
 
