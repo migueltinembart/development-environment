@@ -44,12 +44,35 @@ Eine Development Environment dient zur Vereinfachung von Entwicklungsprozessen i
 
 ### Problem
 
-TODO
+Meine Infrastruktur besteht aus 2 Proxmox Intanzen, auf welcher diverse VMs laufen und mit Docker verschiedene Applikationen betreibe. Die meiste Konfiguration fand damals aber von Hand statt und die Überischt meiner Infratruktur somit nur durch mich nachvollziehbar. Sollte also irgendwann eine Komponente ersestzt werden müssen, z.B. durch einen Ausfall, kann ich nicht mehr gewährleisten, dass ich dieselbe Konfiguration für meine Applikationen wiederherstellen kann ohne dabei ein Backup herbeirufen zu müssen. 
 
 ### Aufgabe
 
-TODO
+Durch die Nutzung der Praktiken welche mit Infrastructure as Code, soll die Grundlegende Konfigurationen sämtlicher Infrastruktur und Applikationen vereinfachen und nachvollziehbar sein. Der Aufbau der verschiedenen Komponenten soll unabhängig aufbaubar sein und somit in mehrere Repositories gegliedert werden. Mit Terraform sollte die Erstellung von VMs einfacher zu erstellen sein. Ansible übernimmt die Erstellung der nötigen MAAS Komponenten wie Regiond und Rackd und Pipelines verschaffen mir die Möglichkeit automatisiert verschiedene Deployments zu verwirklichen ohne dass, Fehler auf die Infrastruktur überteten
+
+### Projektmethode
+
+Für das Projekt wird die Scrum Methode angewandt. Für dieses Projekt habe ich auf Github ein Project erstellen lassen um den Forttschritt des Projekts im Auge zu behalten.
 
 ### Ziele
 
-TODO
+Folgende Ziele sind für dieses Projekt zu erreichen:
+
+- Einfache Erstellung von [MAAS Controller Instanzen]()
+- Verwaltbarkeit von VMs oder anderen Charakteristiken von MAAS Instanzen via Terraform
+- Pushen von neuen Deployments via Pipelines
+- Einfache Deployments mit cloud-init
+- CloudFlare mittels Terraform in die Konfiguration einfliessen lassen
+- Keine Secrets im Quellcode verwalten
+- Daten verschlüsselt auf Quellcodeablegen, sofern nötig
+- Dokumentation des Projekts als Static Webpage übergeben
+
+Die entsprechenden Ziele werden, während der Dokumentation explizit erwähnt
+
+### Risiken
+
+Es besteht das Risiko dass während oder nach der Inbetriebnahme Komponenten wie Rechner, Netzwerkgeräte oder ähnliches ausfallen können. Da dies auf meiner privaten Umgebung geschieht und aus geschäftlicher Sicht keine Dringlichkeit. Kritischere Kompenten des Projekts wie diese Dokumentation, werden auf Cloudflare Pages hochgeladen um die Ausfallsicherheit zu garantieren.
+
+## Architektur
+
+Das Diagramm versinnbildicht von aussen die übergreifenden Systeme. 
