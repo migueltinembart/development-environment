@@ -7,8 +7,6 @@ tags:
 
 # Development Environment
 
-[toc]
-
 ## Projekt
 
 ### Module
@@ -75,4 +73,7 @@ Es besteht das Risiko dass während oder nach der Inbetriebnahme Komponenten wie
 
 ## Architektur
 
-Das Diagramm versinnbildicht von aussen die übergreifenden Systeme. 
+Die verwendeten Systeme werden kategorisiert  
+
+![Bild](./assets/Development-Environment-Planes.png)
+
