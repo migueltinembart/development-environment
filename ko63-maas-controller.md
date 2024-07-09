@@ -8,14 +8,14 @@ tags:
   - semesterarbeit
 ---
 
-# Maas Controller
+## Maas Controller
 
 Die folgenden Controller werden für MAAS benötigt und dementsprechend wurden Rollen in Ansible erstellt.
 
 - [MAAS Region Controller](https://github.com/migueltinembart/maas/tree/main/roles/regiond)
 - [MAAS Rack Controller](https://github.com/migueltinembart/maas/tree/main/roles/rackd)
 
-## Ziele
+### Ziele
 
 Die Rollen müssen folgende Kriterien erfüllen:
 

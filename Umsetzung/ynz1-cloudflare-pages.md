@@ -22,15 +22,41 @@ Folgende Mittel sind für die Implementation in dieser Umsetzung zum Einsatz gek
 
 Folgende Ziele müssen erfüllt werden:
 
-- [ ] Soll DNS Einstellungen für Cloudflare verwalten
+- [ ] Soll allgemeine DNS Einstellungen für Cloudflare verwalten
 - [ ] Soll die Pages Infrastruktur für die Dokumentation bereitstellen
 
-## Einsatz
+## Umsetzung
 
-Im [Tincloud Infrastructure Repo](https://github.com/migueltinembart/tincloud-infrastructure) kann im Ordner //TODO das main.tf initialisiert werden. 
+### DNS Records
+
+Um DNS Records mit Cloudflare erstellen zu können, kann die [cloudflare_record](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record) verwendet werden. Um mehrere Records erstellen zu können, kann über eine `map` von records iteriert werden.
+
+Im Beispiel unten sieht man wie für Entra ID bestimmte DNS Records erstellt werden. 
+
+```tf
+
+resource "cloudflare_record" "entra_records" {
+  for_each = var.records
+  zone_id  = cloudflare_zone.tincloud_tech.id
+  name     = each.value.name
+  value    = each.value.value
+  type     = each.value.type
+  priority = each.value.priority
+  ttl      = each.value.ttl
+  proxied  = false
+}
+```
+### Pages Projekt erstellen
+
+
+
+### Einsatz
+
+Im [tincloud Infrastructure Repository](https://github.com/migueltinembart/tincloud-infrastructure) kann im Ordner `global/shared` das main.tf initialisiert werden. 
 
 ```hcl
-# Im Ordner //TODO
+# global/shared
+cd global/shared
 terraform init -backend-config backend.hcl
 ```
 
@@ -40,6 +66,12 @@ Passe das `.tfvars`-file an und übergib es an terraform für plan oder apply
 terraform apply -var-file prod.tfvars
 ```
 
-### Erstellte Resourcen
+### Resourcen
 
+Folgende Resourcen werden benötigt um Pages auf Cloudflare deployen zu können:
+
+- [cloudflare_pages_project](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/pages_project)
+- [cloudflare_pages_domain](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/pages_domain)
+- [cloudflare_record](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record)
+- [cloudflare_api_token](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)
 

@@ -14,7 +14,7 @@ tags:
 
 Folgende Mittel sind für die Implementation in dieser Umsetzung zum Einsatz gekommen:
 
-- [tincloud-infrastructure repo](https://github.com/migueltinembart/tincloud-infrastructure)
+- [tincloud-infrastructure Repository](https://github.com/migueltinembart/tincloud-infrastructure)
 - [Terraform](./terraform.md)
 - [Cloud-init](https://cloudinit.readthedocs.io/en/latest/)
 
@@ -23,7 +23,7 @@ Folgende Mittel sind für die Implementation in dieser Umsetzung zum Einsatz gek
 Folgende Ziele müssen erfüllt werden:
 
 - [ ] Die Runner für Github Actions müssen auf meiner Infrastruktur laufen
-- [ ] Die zusätzlichen Runner sollten möglichst einfach hinzugefüght werden können
+- [ ] Die zusätzlichen Runner sollten möglichst einfach hinzugefügt werden können
 - [ ] Gute Erreichbarkeit besitzen für die Pulls aller Runs
 
 ## Einsatz
@@ -61,5 +61,4 @@ Folgende Resourcen werden benötigt um funktionierende MAAS-Instanzen herzustell
 
 - [maas_instance](https://registry.terraform.io/providers/dan-sullivan/maas/latest/docs/resources/maas_instance)
 - [maas_dns_domain](https://registry.terraform.io/providers/dan-sullivan/maas/latest/docs/resources/maas_dns_domain)
-
 
