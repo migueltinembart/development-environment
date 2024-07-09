@@ -1,6 +1,6 @@
 ---
 
-title: cloudflare-pages
+title: Cloudflare Pages
 created by: Miguel Tinembart
 created at: 2024-07-06 00:00:00 +0200 CEST
 tags:
