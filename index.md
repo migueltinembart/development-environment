@@ -55,7 +55,7 @@ Für das Projekt wird die Scrum Methode angewandt. Für dieses Projekt habe ich 
 
 Folgende Ziele sind für dieses Projekt zu erreichen:
 
-- Einfache Erstellung von [MAAS Controller Instanzen]()
+- Einfache Erstellung von [MAAS Controller Instanzen](./Umsetzung/ko63-maas-controller.md#rackd-rolle)
 - Verwaltbarkeit von VMs oder anderen Charakteristiken von MAAS Instanzen via Terraform
 - Pushen von neuen Deployments via Pipelines
 - Einfache Deployments mit cloud-init
@@ -66,3 +66,6 @@ Folgende Ziele sind für dieses Projekt zu erreichen:
 
 Die entsprechenden Ziele werden, während der Dokumentation explizit erwähnt
 
+## Umsetzung
+
+Um die Umsetzung genauer zu beschreiben habe ich unter _Umsetzung_ die detaillierten Informationen zu 
