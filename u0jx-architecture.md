@@ -4,11 +4,11 @@ title: Architektur
 created by: Miguel Tinembart
 created at: 2024-07-01 00:00:00 +0200 CEST
 tags:
-  - inbox
+  - PRJ
 
 ---
 
-## Architektur
+## Übersiht
 
 ![Runner-architecture](./assets/runner-diagramm.drawio.png)
 
@@ -18,7 +18,7 @@ Anhand der Abbildung stellen wir folgende Komponenten fest:
 - Ein Maas Region und Rack Controller verwalten Bare Metal Instanzen und virtuelle Maschinen
 - Die Runners übernehmen Grundlegende Deployment Task
 
-### Abhängigkeiten
+## Abhängigkeiten
 Anhand dieser Graphe ist ersichtlich, dass zuerst die Infrastruktur bereitgestellt sein muss, bevor die Applikationen wie Runner und deren Jobs ausgerollt werden können. Der zentrale Fokus der Bereitstellung in diesem Projekt befasst sich mit der Bereitstellung der nötigen Komponenten der Infrastruktur.
 
 ```mermaid
@@ -40,7 +40,7 @@ graph LR;
   end
 ```
 
-#### Applikationen
+### Applikationen
 
 Folgende Applikationen und Dienste definieren die Grundlage für die Infrastruktureinheit:
 
@@ -52,9 +52,9 @@ Folgende Applikationen und Dienste definieren die Grundlage für die Infrastrukt
 
 Diese Applikationen übernehmen in der Konfiguration für Ansible ihre eigene Rollen und erlauben so die freie Verteilung ihrer Hosts nach Funktion.
 
-##### Design
+#### Design
 
-Mit Ansible sind Rollen für die entsprechende Applikation erstellt worden. So erlaubt es sich verschiedene TEilsysteme im gleichen System oder in verteilten Systemen in Betrieb zu nehmen.
+Mit Ansible sind Rollen für die entsprechende Applikation erstellt worden. So erlaubt es sich verschiedene Teilsysteme im gleichen System oder in verteilten Systemen in Betrieb zu nehmen.
 
 > [!warning] Warnung
 > Das Playbook und deren Rollen in diesem Projekt sind nicht für echte Productionzwecke mit redundanten oder horizontal skalierenden Systemen gedacht. Sie erlaubt lediglich die Erstellung von separierten Systemen mit ihrer eigenen Verantwortung.
@@ -89,5 +89,3 @@ graph TD;
 Die Konfiguration der einzelnen Systeme übernimmt in diesem Design Ansible. Mit einem nach Wunsch definierten Inventoryfile können die entsprechenden Applikationen und die dafür nötige Konfiguration mit den Rollendefinitionen widerspiegelt werden. 
 
 Die Erstellung der virtuellen Maschinen erfolgt durch Terraform. Die Bare Metal Instanzen werden von hand gestartet und über das graphische Interface bereitgestellt.
-
-
