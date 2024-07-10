@@ -144,3 +144,15 @@ Trotzdem müssen einige andere Schritte noch eingeleitet werden.
 
 - DHCP muss konfiguriert und eingeschaltet werden für das von MAAS zu verwaltendende Netzwerk
 - Ein separates Netzwerk muss für die Verwaltung der physischen MAschinen durch MAAS
+
+Nachdem beide Konfigurationsschritte gemacht wurden konnzen die Instanzen im Web-GUI erstellt werden. Dabei erstellt man einen Instanz und erfasst die MAC-Adresse des zugehörigen Rechners. Nachdem Start des Rechner fängt die Provisionierung mit PXE an und man kann den Host als KVM-Host kommissionieren.
+
+Sobald alle KVM-Host Instanzen erstellt wurden, konnte ich meine gewünschten [virtuellen Maschinen](./Umsetzung/zx3v-self-hosted-runner.md) mit Terraform erstellen. 
+
+### Dokumentation
+
+Die Dokumentation ist hier auf der Website ersichtlich. Um diese Webseite so bereitstellen zu können musste ich mich für einen Page-Hosting Provder entscheiden. Github Pages wäre zu einfach gewesen, also habe ich meinen bestehenden DNS Provider ausgewählt und mit Terraform und Github Actions auf meinen eigenen Runnern bereitstellen können.
+
+Der Build Prozess für die statische Webseite anhand meiner Markdown Dokumentation kann mit jeglichen Markdown-to-static-webpage-Generator erstellt werden. Da ich aber nicht gerne Abhängigkeiten auf meinen Repos definiere habe ich die Markdown Dokumentation so sauber wie möglich gehalten. Von Github habe ich mir ein Template namens [Quartz](https://github.com/jackyzha0/quartz) geschnappt und klone das Projekt lediglich während des Builds mit Github Actions.
+
+Die weiteren Details stehen [hier](./Umsetzung/nvbo-dokumentation.md)
