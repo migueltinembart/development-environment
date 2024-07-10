@@ -64,8 +64,83 @@ Folgende Ziele sind für dieses Projekt zu erreichen:
 - Daten verschlüsselt auf Quellcodeablegen, sofern nötig
 - Dokumentation des Projekts als Static Webpage übergeben
 
-Die entsprechenden Ziele werden, während der Dokumentation explizit erwähnt
+Die Umsetzungen dieser Ziele werden in der Umsetzungsphase erwähnt.
 
 ## Umsetzung
 
-Um die Umsetzung genauer zu beschreiben habe ich unter _Umsetzung_ die detaillierten Informationen zu 
+Um die Umsetzung genauer zu beschreiben habe ich unter _Umsetzung_  im Explorer die detaillierten Informationen mit Code-Beispielen und genaueren Diagrammen. 
+
+### MAAS Bereitstellung
+
+Im [Architekturdiagram](./u0jx-architecture.md#abhängigkeiten) musste zuerst eine funktionierende MAAS Instanz erarbeitet werden. Die Erstellung des Repository für [MAAS](https://github.com/migueltinembart/maas) erforderte eine lokale geführte Installation einer solchen MAAS Instanz und Mithilfe dieser Information, konnten die nötigen Schritte für eine Installation mit Ansible in die entsprechenden Rollen eingeteilt werden. 
+
+#### Postgres 
+
+Zuerst muss eine [Postgres Datenbank](./Umsetzung/249n-postgresql.md) erstellt werden. Die Datenbank musste durch mich verwaltet und betreut werden können, die Erstellung eigener Secrets ermöglichen und wenn möglich auch für zukünftige andere Postgres Installation nutztbar sein. Mit der [Rollendefinition](./Umsetzung249n-postgresql.md) sind folgende Schritte eingesetzt worden um Postgres für einen [Region Controller](./Umsetzung/ko63-maas-controller.md#regiond-role) bereitzustellen.
+
+```mermaid
+---
+title: Tasks
+---
+flowchart TB
+  subgraph postgres["Postgres"]
+    install["Installiere Postgres"] -->
+    set_options["Setze Postgres Options"] -->
+    create_user["Erstelle nötige User"] -->
+    create_db["Erstelle Datenbank"] -->
+    modify_pg_hba["Modifiziere pg_hba.conf"] -->
+    modify_privileges["Erteile Berechtigungen"] -->
+    restart["Starte Postgers.service neu"]
+  end 
+  install --> postgres
+  ansible --> postgres
+```
+
+Dank Ansible sind diese Schritte reproduzierbar gelöst und durch die Idempotenz wird sichergestellt, dass nichts geändert wird, solange das System den Anforderungen der Ansible Rolle entspricht.
+
+Schlussendlich wurde eine Postgres Datenbank auf einem separaten System installiert operiert die Daten für meine MAAS API. 
+
+#### Controller
+
+Die jeweiligen Controller werden wie bei der Postgres Rolle auch als einzelne Rollen im selben Repository für MAAS definiert. 
+
+- [Regiond]()
+- [Rackd]()
+- [Region & Rackd]()
+
+Im Falle einer Neuinstallation der Controller kann man sich aussuchen ob man die Rollen separat oder zusammen als eine Rolle für sein Zielsystem verwenden möchte. Die Schritte für die Installation von MAAS variieren, da die Installationsschriite abhängig von der Installationsart von MAAS ist. MAAS lässt sich auf Ubuntu Systemem entweder via [apt]() oder [Snap]() installieren. Die Schritte mit apt haben mir nicht gepasst, da mit apt immer eine postgres Datenbank für den [Region Controller](./Umsetzung/ko63-maas-controller.md#regiond-rolle) mitinstalliert wird und damit initialisiert wird. Da ich die Datenbank selber bereitstellen wollte, habe ich mich auf die Installation mit **Snap** verlassen. Mit Snap wird nämlich noch ein Initialisierungsschritt benötigt, bei der man das zieldatenbanksystem direkt übergeben kann.
+
+Die Schritte um beide Systeme als eine Einheit zu installieren beschreibt sich mit folgendem Diagramm:
+
+```mermaid
+flowchart LR
+  subgraph regiond["Region Controller"]
+    install_regiond["Installiere Regiond"] -->
+    initialize_region["Initialisiere Regiond"] -->
+    configure["Konfiguration"] -->
+    create_registration["Registrationsschlüssel erstellen"] -->
+    create_api_key["Erstelle API-Schlüssel für Terraform"]
+  end
+  subgraph rackd
+    install_rack[Installiere Rackd] -->
+    get_registration["Hole Registrationschlüssel"] -->
+    initialize_rack["Initialisiere Rackd"]
+    
+  end
+
+  create_registration -- mit ansible übergeben --> get_registration
+  initialize_rack -- registriere --> regiond
+```
+
+Ein wichtiger Schritt bei der ganzen Implementation ist die Erstellung und die Übergabe des Registrationsschlüssel vom **Region Controller** zum [Rack Controller](./Umsetzung/ko63-maas-controller.md#rackd-rolle). Dies wird in Ansible durch die Erstellung einer Laufzeitvariable mit `register` erstellt und kann so für den rackd im selben Playbook wiederverwendet werden. 
+
+Nachdem Durchlauf konnte ich mich bei der Weboberfläche mit anmelden und konnte mich dann um das provisionieren von physischen Maschinen kümmern.
+
+#### Instanzen
+
+Um mit der MAAS Infrastruktur etwas anfangen zu können, müssen noch die physischen Rechner mit der PXE-Boot Funktionalität des MAAS Rack Controllers gestartet und kommissioniert werden. Für diesen Schritt habe ich noch nicht mit Terraform angefangen, da dieser Prozess trotz allem, immer noch von Hand ausgeführt wird. Die Rechner starten sich bei mir leider immer noch nicht von alleine.
+
+Trotzdem müssen einige andere Schritte noch eingeleitet werden. 
+
+- DHCP muss konfiguriert und eingeschaltet werden für das von MAAS zu verwaltendende Netzwerk
+- Ein separates Netzwerk muss für die Verwaltung der physischen MAschinen durch MAAS
