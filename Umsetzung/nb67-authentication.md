@@ -6,7 +6,6 @@ title: Authentifizierung der Komponenten
 
 Folgende Mittel sind für die Implementation in dieser Umsetzung zum Einsatz gekommen:
 
-- [Github Actions](./2vug-github-actions.md)
 - [Tincloud Infrastructure Repository](https://github.com/migueltinembart/tincloud-infrastructure)
 
 ## Ziele

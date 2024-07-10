@@ -49,7 +49,12 @@ Durch die Nutzung der Praktiken welche mit Infrastructure as Code, soll die Grun
 
 ### Projektmethode
 
-Für das Projekt wird die Scrum Methode angewandt. Für dieses Projekt habe ich auf Github ein Project erstellen lassen um den Forttschritt des Projekts im Auge zu behalten.
+Für das Projekt wollte ich auf Scrum setzen, doch mit der Zeit hat sich dies als Herausforderung gezeigt. Aus fogenden Gründen
+
+- Der Familienzuwachs birgt wieder mehr Zeit die in die Familie investiert werden muss
+- Ich kann nur zu späten Abendzeiten Zeit für Projekte investieren
+
+Darum habe ich den Fokus auf die Qualität meiner Arbeit und mich weniger auf ein Framework wie Scrum verlassen. Das Ziel meiner Arbeit ist es **Value** zu bringen. Darum bezeichne ich mein Vorgehen bei dieser Arbeit als möglichst Agil getrieben. Wenn ein Feature benötigt war, habe ich dieses einfach zum besten Zeitpunkt erledigt, wie es die Priorität des Features und den Abhängigkeiten entsrpechend gehandelt.
 
 ### Ziele
 
