@@ -14,7 +14,6 @@ tags:
 Folgende Mittel sind für die Implementation in dieser Umsetzung zum Einsatz gekommen:
 
 - [cloudflare](https://www.cloudflare.com)
-- [Terraform](./terraform.md)
 - [Github Actions](./2vug-github-actions.md)
 - [Tincloud Infrastructure Repository](https://github.com/migueltinembart/tincloud-infrastructure)
 - [development-environment Repository](https://github.com/migueltinembart/development-environment)
@@ -24,8 +23,8 @@ Folgende Mittel sind für die Implementation in dieser Umsetzung zum Einsatz gek
 
 Folgende Ziele müssen erfüllt werden:
 
-- [ ] Soll allgemeine DNS Einstellungen für Cloudflare verwalten
-- [ ] Soll die Pages Infrastruktur für die Dokumentation bereitstellen
+- [x] Soll allgemeine DNS Einstellungen für Cloudflare verwalten
+- [x] Soll die Pages Infrastruktur für die Dokumentation bereitstellen
 
 ## Umsetzung
 

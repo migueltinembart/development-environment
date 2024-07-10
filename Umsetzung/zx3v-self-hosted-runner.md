@@ -153,6 +153,16 @@ provider "github" {
 
 ```
 
+### Cloud Init
+
+Zur sofortigen Instanzierung von Rechner für die Aufgaben eines self-hosted Runners, ist ein user-data file bereitgestellt werden welches im cloud-init format bereitgestellt wird. Dieses ist aber in einem template-format bereitgestellt worden. [userdata.tftpl](https://github.com/migueltinembart/tincloud-infrastructure/blob/main/giswil/shared/cloud-init/github_runner/user_data.tftpl)
+
+In diesem `.tftpl`-Beispiel können Variabeln mit der `templatefile()`-Funktion  kombinieren und die im `.tftpl`-file mit `${}` markierten Felder via Templating mit den entsprechenden Werten austuaschen.
+
+```tf
+  - RUNNER_ALLOW_RUNASROOT=1 ./config.sh --url https://github.com/${owner}/${github_repo} --token ${github_token} --unattended
+```
+
 ### Einsatz
 
 Im [tincloud Infrastructure Repository](https://github.com/migueltinembart/tincloud-infrastructure) kann im Ordner `giswil/shared` das main.tf initialisiert werden. 
@@ -174,8 +184,5 @@ terraform apply -var-file prod.tfvars
 
 Folgende Resourcen sind zur Umsetzung eingesetzt worden:
 
-- [cloudflare_pages_project](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/pages_project)
-- [cloudflare_pages_domain](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/pages_domain)
-- [cloudflare_record](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/record)
-- [cloudflare_api_token](https://registry.terraform.io/providers/cloudflare/cloudflare/latest/docs/resources/api_token)
-
+- [Github Actions Dokumentation](https://docs.github.com/en/actions)
+- [Tincloud Infrastructure](https://github.com/migueltinembart/tincloud-infrastructure)

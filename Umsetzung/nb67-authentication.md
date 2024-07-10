@@ -13,8 +13,8 @@ Folgende Mittel sind für die Implementation in dieser Umsetzung zum Einsatz gek
 
 Folgende Ziele müssen erfüllt werden:
 
-- [ ] Dienste wie Pipelines nach bestem Gewissen authorisieren gewisse Änderungen an der Infrastruktur zu machen
-- [ ] Backend für Terraform mit Entra ID authorisieren
+- [x] Dienste wie Pipelines nach bestem Gewissen authorisieren gewisse Änderungen an der Infrastruktur zu machen
+- [x] Backend für Terraform mit Entra ID authorisieren
 
 ## Umsetzung
 
@@ -28,7 +28,7 @@ Nach der Registration können die Daten zur Authentifizerung der Applikation mit
 
 ![Bild von Secret Fenster Entra ID](../assets/Bildschirmfoto 2024-07-10 um 12.12.45.png)
 
-### Terraform
+### Authorisieren der Pipeline
 
 Die gesamte Application Registration mitsamt Berechtigungserteilung findet im Terraform statt. Um Github als Applikation mit der Pipeline authorisieren zu können, wurden alle nötigen Resourcen und Verbindungen im File `github.tf`. 
 
@@ -88,13 +88,50 @@ In diesem Fall ist zu sehen dass folgende Resourcen wie folgt aufgebaut sind:
 - Es wird die Applikation mitsamt Service Principal erstellt
 - Es werden mehrere Rollen auf dem Principal angewandt
 
+### Terraform Backend
+
+Der einzige Schritt welches durch klicken und scrollen erstellt wurde ist ein Storage Account. Denn im Falle einer Zerstötung der Infrastruktur seitens Terraform, muss der Storage Container noch stehen können. 
+
+Mithilfe der Role Assignment welche in Terraform erstellt wurde, wurde automatisch die richtige Berechtigung zu Erstellung von Resourcen auf Azure inkl. dem ablegen von Daten auf dem Blob Storage im Storage Account erstellt. 
+
+Um das Terraform Backend zu initialisieren gibt es 2 Wege eine Verbindung mit diesem Backend zu erstellen:
+
+- Mit az login und einem `backend`-file
+- Mit dem Service Principal
+
+```bash
+az login
+
+## Interaktives Login
+
+terraform init -backend-config backend.hcl
+```
+
+Jedoch beim Login mit einem Service Principal müssen alle Parameter einer OpenID Verbindung als Parameter übergeben.
+
+Hier ein Beispiel von meiner Pipeline zur Anmeldung über einen Service Principal. 
+
+```bash
+terraform init \
+            -input=false \
+            -backend-config="resource_group_name=${{vars.resource_group_name}}" \
+            -backend-config="storage_account_name=${{vars.storage_account_name}}" \
+            -backend-config="container_name=${{vars.container_name}}" \
+            -backend-config="key=${{vars.key}}" \
+            -backend-config=use_oidc=true \
+            -backend-config="tenant_id=${{secrets.tenant_id}}" \
+            -backend-config="client_id=${{secrets.client_id}}" \
+            -backend-config="client_secret=${{secrets.client_secret}}" \
+            -backend-config="subscription_id=${{secrets.subscription_id}}"
+```
+
 ### Einsatz
 
 Im [tincloud Infrastructure Repository](https://github.com/migueltinembart/tincloud-infrastructure) kann im Ordner `az/shared` das main.tf initialisiert werden. 
 
 ```hcl
 # az/shared
-cd global/shared
+cd az/shared
 terraform init -backend-config backend.hcl
 ```
 

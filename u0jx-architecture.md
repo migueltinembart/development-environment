@@ -89,3 +89,5 @@ graph TD;
 Die Konfiguration der einzelnen Systeme übernimmt in diesem Design Ansible. Mit einem nach Wunsch definierten Inventoryfile können die entsprechenden Applikationen und die dafür nötige Konfiguration mit den Rollendefinitionen widerspiegelt werden. 
 
 Die Erstellung der virtuellen Maschinen erfolgt durch Terraform. Die Bare Metal Instanzen werden von hand gestartet und über das graphische Interface bereitgestellt.
+
+Die genauere Implementation der verschiedenen Systeme sind im Abteil Umsetzung zu lesen.

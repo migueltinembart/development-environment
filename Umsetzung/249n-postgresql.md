@@ -5,10 +5,11 @@ created by: Miguel Tinembart
 created at: 2024-07-02 00:00:00 +0200 CEST
 tags:
   - Semesterarbeit
-  - ansible
+  - Ansible
+  - IAC
 ---
 
-# Postgresql
+## Verwendete Mittel
 
 Postgresql spielt für die Datenverwaltung in MAAS eine zentrale Rolle. Für die Bereitstellung kommt Ansible zum Zug. Eine Rolle für die Bündelung der Konfiguration wurde erstellt.
 
@@ -135,4 +136,11 @@ Um schlussendlich die Rolle mit diesem Inventory durchzuspielen, kann man dies e
 ansible-playbook -i inventory/hosts.yaml site.yaml
 ```
 
+### Resourcen
+
+Folgende Resourcen sind zur Umsetzung eingesetzt worden:
+
+- [Postgres Dokumentation](https://www.postgresql.org)
+- [Postgres Ansible Community](https://docs.ansible.com/ansible/latest/collections/community/postgresql/index.html)
+- [MAAS Repository](https://github.com/migueltinembart/maas)
 

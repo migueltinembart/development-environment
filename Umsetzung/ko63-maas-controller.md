@@ -4,8 +4,9 @@ title: Maas Controller
 created by: Miguel Tinembart
 created at: 2024-07-03 00:00:00 +0200 CEST
 tags:
-  - ansible
+  - Ansible
   - semesterarbeit
+  - IAC
 ---
 
 ## Verwendete  Mittel
@@ -19,12 +20,12 @@ Die folgenden Controller werden für MAAS benötigt und dementsprechend wurden R
 
 Die Rollen müssen folgende Kriterien erfüllen:
 
-- [ ] Anhand der Architektur des Systems die richtige Installation vornehmen (AMD64, ARM64, etc.)
-- [ ] Listen aufnehmen damit Tasks iterierbar sind
-- [ ] Benutzer erstellen und berechtigen können
-- [ ] Eine Datenbank anlegen
-- [ ] Konfigurationen an Files vornehmen (z.B. pg_hba.conf)
-- [ ] Mittels Handler bestimmte Tasks nur bei Änderungen vornehmen können.
+- [x] Anhand der Architektur des Systems die richtige Installation vornehmen (AMD64, ARM64, etc.)
+- [x] Listen aufnehmen damit Tasks iterierbar sind
+- [x] Benutzer erstellen und berechtigen können
+- [x] Eine Datenbank anlegen
+- [x] Konfigurationen an Files vornehmen (z.B. pg_hba.conf)
+- [x] Mittels Handler bestimmte Tasks nur bei Änderungen vornehmen können.
 
 ## Umsetzung
 
@@ -57,16 +58,16 @@ flowchart RL
 
 ### Ansible
 
-Für Ansible wurden 2 Rollen im [MAAS Repository]() bereitgestellt. Zusätzlich wurden noch optionale Rollen erstellt, welche die Initialisierung noch vereinfachen sollten. Diese Rollendefinitionen wurden gemacht:
+Für Ansible wurden 2 Rollen im [MAAS Repository](https://github.com/migueltinembart/maas) bereitgestellt. Zusätzlich wurden noch optionale Rollen erstellt, welche die Initialisierung noch vereinfachen sollten. Diese Rollendefinitionen wurden gemacht:
 
-- [regiond]()
-- [rackd]()
-- [regiond_rackd]()
-- [maas-api]()
+- [regiond](./ko63-maas-controller.md#regiond-rolle)
+- [rackd](#rackd-rolle)
+- [regiond_rackd](https://github.com/migueltinembart/maas/tree/main/roles/region_rackd)
+- [maas-api](https://github.com/migueltinembart/maas/tree/main/roles/maas-api)
 
 Die ersten beiden Rollen sind klar für einzelne Deployments eines entsprechenden Controllers zuständig. Ausserdem wurde eine gebündelte Rolle erstellt, welche beide Rollen gleichzeitig für simple Deployments auf einem Rechner erstellt. Die maas-api Rolle macht initiale Konfigurationseinstellungen und generiert einen API-Schlüssel. Diesen API-Schlüssel benötigen wir für die Erstellung von Instanzen mittels Terraform für [self-hosted Github Runner](./zx3v-self-hosted-runner.md).
 
-#### Regiond
+#### Regiond Rolle
 
 Regiond durchläuft folgende Tasks um einen Regiond Controller zu erstellen:
 
@@ -166,7 +167,7 @@ Zuletzt wirt der API-Schlüssel für den Benutzer erstellt/eingelesen und als Va
 
 #### Rackd Rolle
 
-Die detaillierte Spezifikation findet man im Ordner [rackd]().
+Die detaillierte Spezifikation findet man im Ordner [rackd](https://github.com/migueltinembart/maas/tree/main/roles/rackd).
 
 
 Rackd durchläuft folgende Tasks um einen Rackd Controller zu erstellen:
