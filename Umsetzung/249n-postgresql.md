@@ -66,7 +66,7 @@ Wenn gefordert, soll nicht immer ein Task geschrieben werden, welches dieselbe A
     - postgresql
 ```
 
-### Reaktivität
+### Handlers
 
 Handlers erleichtern die Steuerung der Änderungen und die Reaktion darauf. Am Ende der Taskliste wird mit dem `notify:` Attribut ein Signal an einen Handler geschickt. Dieser löst nur aus wenn eine Änderung stattgefunden hat und ist für die Erstinstallation wichtig, denn nachdem die Konfiguration beim ersten Durchlauf sicher geändert wurde, sollte der `postgresql.service` neugestartet werden.
 
