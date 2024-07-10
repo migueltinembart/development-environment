@@ -42,3 +42,5 @@ flowchart LR
 ```
 
 In der Abbildung ist zu sehen dass Terraform mit Informationen von Entra ID sich authorisieren müsste. Dies Bedarf bei OpenID Connect eine ´client-id´, ´tenant-id´ und ein ´client-secret´. Diese konnte ich noch mit meiner Owner Rolle Erstellen, wird aber zukünftig über den Service Principal mit Terraform interagiert.
+
+Weitere Details zur Ausführung findest du unter [Cloudflare Pages](../Umsetzung/2vug-github-actions.md).
